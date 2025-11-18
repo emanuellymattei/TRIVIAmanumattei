@@ -31,3 +31,29 @@ for pergunta in lista_de_perguntas:
     print(f'Original: {pergunta['question']}')
     print(f'Tradução: {traduzir(pergunta['question'])}')
     print('-------------------------------')
+
+import html
+import random
+import requests
+from tradutor import traduzir
+
+
+def buscar_perguntas(qtd=5, categoria=None, dificuldade=None):
+    """
+    Busca perguntas da API do OpenTriviaDB.
+    - qtd: quantidade de perguntas
+    - categoria: categoria numérica (opcional)
+    - dificuldade: easy, medium, hard ou None
+    """
+    parametros = {'amount': qtd}
+    if categoria is not None:
+        parametros['category'] = categoria
+    if dificuldade is not None:
+        parametros['difficulty'] = dificuldade
+
+    url = 'https://opentdb.com/api.php'
+    resposta = requests.get(url, params=parametros)
+    resposta.raise_for_status()
+
+    dados = resposta.json()
+    return dados.get('results', [])
