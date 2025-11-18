@@ -75,3 +75,38 @@ def montar_pergunta(item):
         'correta': correta
     }
 
+import random
+
+def exibir_pergunta(pergunta):
+    """
+    Exibe uma pergunta no terminal, embaralha as alternativas
+    e retorna a lista embaralhada junto com a resposta correta.
+
+    Parâmetros:
+        pergunta (dict): dicionário contendo 'question', 'correct_answer', 'incorrect_answers'
+
+    Retorna:
+        alternativas_embaralhadas (list): lista com todas as alternativas embaralhadas
+        resposta_correta (str): texto da resposta correta
+    """
+
+    texto_pergunta = pergunta['question']
+    resposta_correta = pergunta['correct_answer']
+    respostas_erradas = pergunta['incorrect_answers']
+
+    # Junta todas as alternativas
+    alternativas = respostas_erradas + [resposta_correta]
+
+    # Embaralha
+    random.shuffle(alternativas)
+
+    # Exibe a pergunta formatada
+    print("\n----------------------------------")
+    print(f"Pergunta: {texto_pergunta}")
+    print("----------------------------------")
+
+    # Exibe alternativas enumeradas
+    for indice, alternativa in enumerate(alternativas, start=1):
+        print(f"{indice}. {alternativa}")
+
+    return alternativas, resposta_correta
