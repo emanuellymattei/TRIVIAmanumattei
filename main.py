@@ -110,3 +110,42 @@ def exibir_pergunta(pergunta):
         print(f"{indice}. {alternativa}")
 
     return alternativas, resposta_correta
+
+def verificar_resposta(alternativas, resposta_correta):
+    """
+    Recebe a lista de alternativas exibidas e verifica se o usuário
+    escolheu a resposta correta.
+
+    Parâmetros:
+        alternativas (list): lista de alternativas embaralhadas
+        resposta_correta (str): texto da alternativa correta
+
+    Retorna:
+        True se acertou, False se errou
+    """
+
+    while True:
+        escolha = input("\nDigite o número da alternativa: ")
+
+        # Confere se digitou um número válido
+        if escolha.isdigit():
+            escolha = int(escolha)
+
+            if 1 <= escolha <= len(alternativas):
+                break
+            else:
+                print("Número inválido! Digite um número que esteja na lista.")
+        else:
+            print("Entrada inválida! Digite apenas números.")
+
+    # Descobre qual alternativa foi escolhida
+    alternativa_escolhida = alternativas[escolha - 1]
+
+    # Confere se está correta
+    if alternativa_escolhida == resposta_correta:
+        print("✅ Resposta correta! Muito bem!")
+        return True
+    else:
+        print(f"❌ Resposta errada! A correta era: {resposta_correta}")
+        return False
+
