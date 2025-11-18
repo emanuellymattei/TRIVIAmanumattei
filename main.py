@@ -149,3 +149,61 @@ def verificar_resposta(alternativas, resposta_correta):
         print(f"❌ Resposta errada! A correta era: {resposta_correta}")
         return False
 
+def jogar_trivia():
+    print("\n===== 🎮 JOGO DE TRIVIA – BEM-VINDO! =====\n")
+
+    # Escolha da dificuldade
+    print("Escolha a dificuldade:")
+    print("1 - Fácil")
+    print("2 - Médio")
+    print("3 - Difícil")
+
+    while True:
+        nivel = input("Digite o número da dificuldade: ")
+
+        if nivel == "1":
+            dificuldade = "easy"
+            break
+        elif nivel == "2":
+            dificuldade = "medium"
+            break
+        elif nivel == "3":
+            dificuldade = "hard"
+            break
+        else:
+            print("Opção inválida! Escolha 1, 2 ou 3.")
+
+    print(f"\n🔎 Buscando perguntas de dificuldade: {dificuldade}...\n")
+
+    perguntas = fetch_trivia(dificuldade)
+
+    if not perguntas:
+        print("Erro ao carregar perguntas. Tente novamente mais tarde.")
+        return
+
+    pontuacao = 0
+    total = len(perguntas)
+
+    # Loop das perguntas
+    for idx, item in enumerate(perguntas, start=1):
+
+        dados = montar_pergunta(item)
+
+        print(f"\n🔹 Pergunta {idx}/{total}:")
+        print(dados['pergunta'])
+
+        print("\nOpções:")
+        for i, opcao in enumerate(dados['opcoes'], start=1):
+            print(f"{i} - {opcao}")
+
+        # Verificar resposta do usuário
+        acertou = verificar_resposta(dados['opcoes'], dados['correta'])
+
+        if acertou:
+            pontuacao += 1
+
+    # Resultado final
+    print("\n===== 🏁 RESULTADO FINAL =====")
+    print(f"Você acertou {pontuacao} de {total} perguntas!")
+    print("Muito bem!" if pontuacao > total/2 else "Continue praticando!")
+
