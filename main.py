@@ -207,3 +207,5 @@ def jogar_trivia():
     print(f"Você acertou {pontuacao} de {total} perguntas!")
     print("Muito bem!" if pontuacao > total/2 else "Continue praticando!")
 
+if __name__ == "__main__":
+    jogar_trivia()
