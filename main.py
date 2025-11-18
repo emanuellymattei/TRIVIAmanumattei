@@ -57,3 +57,21 @@ def buscar_perguntas(qtd=5, categoria=None, dificuldade=None):
 
     dados = resposta.json()
     return dados.get('results', [])
+
+def montar_pergunta(item):
+    """
+    Organiza a pergunta, alternativas e resposta correta.
+    """
+    pergunta = html.unescape(item['question'])
+    correta = html.unescape(item['correct_answer'])
+    incorretas = [html.unescape(x) for x in item['incorrect_answers']]
+
+    opcoes = incorretas + [correta]
+    random.shuffle(opcoes)
+
+    return {
+        'pergunta': pergunta,
+        'opcoes': opcoes,
+        'correta': correta
+    }
+
